@@ -21,17 +21,24 @@ class SchedulerPerWeek
         $schedule = [];
         $weekDays = $this->request->getWeekDays();
         sort($weekDays);
-        $newWeek = $this->request->getStartingDate();
+
+        $startingDate = $this->request->getStartingDate();
+
+        $startingDate->locale('ar');
+
+        foreach ($weekDays as $day) {
+            $schedule[$startingDate->startOfWeek()->format('Y-m-d') . ' - ' .$startingDate->endOfWeek()->format('Y-m-d')][$startingDate->weekday($day)->format('l')] = $startingDate->weekday($day)->format('Y-m-d');
+        }
+
         for ($i = 0; $i < $totalWeeks; $i++) {
             foreach ($this->request->getWeekDays() as $day) {
-                $weekStart = $this->request->getStartingDate()->startOfWeek()->format('Y-m-d');
-                $weekEnd = $this->request->getStartingDate()->endOfWeek()->format('Y-m-d');
-                $weekID = sprintf('%s-%s', $weekStart, $weekEnd);
-                $day = $this->request->getStartingDate()->weekday($day);
+                $weekStart = $startingDate->startOfWeek()->format('Y-m-d');
+                $weekEnd = $startingDate->endOfWeek()->format('Y-m-d');
+                $weekID = sprintf('%s - %s', $weekStart, $weekEnd);
+                $day = $startingDate->weekday($day);
                 $dayAsString = $day->format('l');
-                $schedule[$weekID][$dayAsString] = $day->format('Y-m-d');
-            }
-            $newWeek = $newWeek->addWeek();
+                $schedule[$weekID][$dayAsString] = $day->format('Y-m-d');            }
+            $startingDate->addWeek();
         }
 
         return $schedule;
