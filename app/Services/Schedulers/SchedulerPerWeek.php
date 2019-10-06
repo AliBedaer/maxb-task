@@ -2,9 +2,10 @@
 
 namespace App\Services\Schedulers;
 
+use App\Contracts\Scheduler\SchedulerInterface;
 use App\Entity\Request\SchedulerRequest;
 
-class SchedulerPerWeek
+class SchedulerPerWeek implements SchedulerInterface
 {
     private $request;
 
@@ -13,7 +14,7 @@ class SchedulerPerWeek
         $this->request = $request;
     }
 
-    public function schedule(int $chapters)
+    public function schedule(int $chapters) :array
     {
         $totalSessions = $this->request->getSessions() * $chapters;
         $totalWeeks = $totalSessions / count($this->request->getWeekDays());
