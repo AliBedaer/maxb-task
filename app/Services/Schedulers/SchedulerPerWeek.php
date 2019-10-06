@@ -16,11 +16,11 @@ class SchedulerPerWeek implements SchedulerInterface
 
     public function schedule(int $chapters) :array
     {
+        $weekDays = $this->request->getWeekDays();
         $totalSessions = $this->request->getSessions() * $chapters;
-        $totalWeeks = $totalSessions / count($this->request->getWeekDays());
+        $totalWeeks = $totalSessions / count($weekDays);
 
         $schedule = [];
-        $weekDays = $this->request->getWeekDays();
         sort($weekDays);
 
         $startingDate = $this->request->getStartingDate();
@@ -32,7 +32,7 @@ class SchedulerPerWeek implements SchedulerInterface
         }
 
         for ($i = 0; $i < $totalWeeks; $i++) {
-            foreach ($this->request->getWeekDays() as $day) {
+            foreach ($weekDays as $day) {
                 $weekStart = $startingDate->startOfWeek()->format('Y-m-d');
                 $weekEnd = $startingDate->endOfWeek()->format('Y-m-d');
                 $weekID = sprintf('%s - %s', $weekStart, $weekEnd);

@@ -15,9 +15,9 @@
 
 	
 ### Usage
-* Web Service URL `localhost:8000/api/book-schedule`
-* Web Service Method `post`
-* Web Service Query Inputs
+* Api URL `localhost:8000/api/book-schedule`
+* Api Method `post`
+* Api Inputs
 	- `starting_date` __Date__  start date  `2019-10-09`
 	- `days_in_week` __Array__ days in week 1 starturday 6 friday `[6,4]`
 	- `required_sessions` __integer__ sessions required to finish one chapter `6`
