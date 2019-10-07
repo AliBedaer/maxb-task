@@ -27,10 +27,6 @@ class SchedulerPerWeek implements SchedulerInterface
 
         $startingDate->locale('ar');
 
-        foreach ($weekDays as $day) {
-            $schedule[$startingDate->startOfWeek()->format('Y-m-d') . ' - ' .$startingDate->endOfWeek()->format('Y-m-d')][$startingDate->weekday($day)->format('l')] = $startingDate->weekday($day)->format('Y-m-d');
-        }
-
         for ($i = 0; $i < $totalWeeks; $i++) {
             foreach ($weekDays as $day) {
                 $weekStart = $startingDate->startOfWeek()->format('Y-m-d');
@@ -38,7 +34,8 @@ class SchedulerPerWeek implements SchedulerInterface
                 $weekID = sprintf('%s - %s', $weekStart, $weekEnd);
                 $day = $startingDate->weekday($day);
                 $dayAsString = $day->format('l');
-                $schedule[$weekID][$dayAsString] = $day->format('Y-m-d');            }
+                $schedule[$weekID][$dayAsString] = $day->format('Y-m-d');
+            }
             $startingDate->addWeek();
         }
 

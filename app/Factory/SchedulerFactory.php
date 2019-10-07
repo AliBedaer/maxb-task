@@ -2,12 +2,13 @@
 
 namespace App\Factory;
 
+use App\Contracts\Scheduler\SchedulerInterface;
 use App\Entity\Request\SchedulerRequest;
 use App\Services\Schedulers\SchedulerPerWeek;
 
 class SchedulerFactory
 {
-    public static function create($type, SchedulerRequest $request)
+    public static function create($type, SchedulerRequest $request) : SchedulerInterface
     {
         switch ($type) {
             case 'per_week':

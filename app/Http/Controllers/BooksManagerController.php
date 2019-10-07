@@ -10,15 +10,14 @@ use App\Entity\Request\SchedulerRequest;
 class BooksManagerController extends Controller
 {
 
-    public function scheduleBook(BookScheduleRequest $request)
+    public function scheduleBook(BookScheduleRequest $request, BookSchedulerService $scheduleService)
     {
         $scheduleRequest = new SchedulerRequest();
         $scheduleRequest->setStartingDate(Carbon::parse($request->starting_date));
         $scheduleRequest->setWeekDays($request->days_in_week);
         $scheduleRequest->setSessions($request->required_sessions);
 
-        $bookScheduleService = new BookSchedulerService();
-        return $bookScheduleService->schedule(BookSchedulerService::SCHEDULE_PER_WEEK, $scheduleRequest);
+        return $scheduleService->schedule(BookSchedulerService::SCHEDULE_PER_WEEK, $scheduleRequest);
     }
 
 
